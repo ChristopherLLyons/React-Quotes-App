@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import QuoteBox from "./QuoteBox/QuoteBox.js";
+import quotes from "./Quotes/Quotes.js";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quote: quotes[0].quote,
+      author: quotes[0].author
+    };
+  }
+
+  getRandomQuote() {
+    var randomQuoteIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomQuoteIndex];
+  }
+
+  handleClick = () => {
+    const randomQuote = this.getRandomQuote();
+
+    this.setState({
+      quote: randomQuote.quote,
+      author: randomQuote.author
+    });
+  };
+
+  getRandomColor() {
+    const color = `rgb(
+      ${Math.floor(Math.random() * 155)},
+      ${Math.floor(Math.random() * 155)},
+      ${Math.floor(Math.random() * 155)}
+    )`;
+    return color;
+
+  }
+
+  render() {
+    return (
+      <div class="quoteBox">
+        <QuoteBox
+          color={this.getRandomColor()}
+          quote={this.state.quote}
+          author={this.state.author}
+          handleClick={this.handleClick}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
